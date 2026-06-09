@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Present Tenses — Full Test</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f5f2eb;
+    --ink: #0f0e0b;
+    --paper: #fffef9;
+    --rule: #d8d4c8;
+    --muted: #8a8678;
+    --accent: #c8391a;
+    --accent2: #1a4a8c;
+    --green: #1a6b3e;
+    --green-light: #eaf4ee;
+    --red-light: #fdf0ee;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    background-image: repeating-linear-gradient(0deg, transparent, transparent 27px, rgba(0,0,0,0.04) 27px, rgba(0,0,0,0.04) 28px);
+    color: var(--ink);
+    font-family: 'Libre Baskerville', serif;
+    min-height: 100vh;
+    padding: 0 0 100px;
+  }
+
+  /* ── COVER ── */
+  #cover {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 24px;
+    text-align: center;
+    background: var(--ink);
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+  }
+  #cover::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(-45deg, transparent, transparent 20px, rgba(255,255,255,0.015) 20px, rgba(255,255,255,0.015) 21px);
+  }
+  .cover-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+    margin-bottom: 28px;
+    position: relative;
+  }
+  .cover-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(4rem, 16vw, 11rem);
+    line-height: 0.88;
+    letter-spacing: -2px;
+    position: relative;
+    margin-bottom: 8px;
+  }
+  .cover-title .line2 { color: var(--accent); display: block; font-size: clamp(2.5rem, 12vw, 8rem); }
+  .cover-sub { font-family: 'DM Mono', monospace; font-size: 0.7rem; letter-spacing: 3px; color: rgba(255,255,255,0.35); margin: 24px 0 48px; text-transform: uppercase; position: relative; }
+
+  .cover-topics {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 48px;
+    position: relative;
+  }
+  .topic-chip {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 1.5px;
+    color: rgba(255,255,255,0.5);
+    padding: 5px 16px;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px;
+    display: inline-block;
+  }
+  .topic-chip.done { color: rgba(255,255,255,0.8); border-color: rgba(255,255,255,0.3); }
+
+  .cover-meta { display: flex; gap: 36px; margin-bottom: 52px; position: relative; flex-wrap: wrap; justify-content: center; }
+  .cover-meta-item { text-align: left; }
+  .cover-meta-label { font-family: 'DM Mono', monospace; font-size: 0.55rem; letter-spacing: 3px; color: rgba(255,255,255,0.3); text-transform: uppercase; margin-bottom: 4px; }
+  .cover-meta-val { font-size: 0.9rem; color: rgba(255,255,255,0.75); }
+
+  .start-btn {
+    position: relative;
+    padding: 16px 52px;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: 3px;
+    cursor: pointer;
+    box-shadow: 4px 4px 0 rgba(255,255,255,0.15);
+    transition: transform 0.1s, box-shadow 0.1s;
+  }
+  .start-btn:hover { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 rgba(255,255,255,0.15); }
+
+  /* ── TEST ── */
+  #test-shell { display: none; }
+
+  .test-header {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--ink);
+    padding: 10px 28px;
+    display: flex; align-items: center; gap: 16px;
+  }
+  .test-header-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; letter-spacing: 2px; color: #fff; margin-right: auto; }
+  .progress-track { flex: 1; max-width: 260px; height: 3px; background: rgba(255,255,255,0.12); border-radius: 2px; overflow: hidden; }
+  .progress-fill { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.4s ease; width: 0%; }
+  .progress-label { font-family: 'DM Mono', monospace; font-size: 0.62rem; color: rgba(255,255,255,0.45); white-space: nowrap; }
+
+  /* ── BODY ── */
+  .test-body { max-width: 760px; margin: 0 auto; padding: 52px 24px 80px; }
+
+  .section-header {
+    display: flex; align-items: baseline; gap: 14px;
+    margin-bottom: 6px; margin-top: 52px;
+    padding-bottom: 10px; border-bottom: 2px solid var(--ink);
+  }
+  .section-header:first-child { margin-top: 0; }
+  .section-num { font-family: 'Bebas Neue', sans-serif; font-size: 2.8rem; color: var(--accent); line-height: 1; }
+  .section-info {}
+  .section-title { font-family: 'DM Mono', monospace; font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); }
+  .section-topic { font-family: 'Libre Baskerville', serif; font-size: 1.1rem; font-weight: 700; margin-top: 2px; }
+  .section-instr { font-size: 0.85rem; color: var(--muted); font-style: italic; margin-bottom: 20px; line-height: 1.6; }
+
+  /* ── QUESTION ROWS ── */
+  .q-row {
+    display: grid; grid-template-columns: 28px 1fr;
+    gap: 10px; padding: 13px 0;
+    border-bottom: 1px solid var(--rule);
+    align-items: start;
+    transition: background 0.15s;
+  }
+  .q-row:hover { background: rgba(255,255,255,0.45); }
+  .q-row.answered-ok { background: var(--green-light); }
+  .q-row.answered-bad { background: var(--red-light); }
+  .q-n { font-family: 'DM Mono', monospace; font-size: 0.62rem; color: var(--muted); padding-top: 3px; text-align: right; }
+  .q-content {}
+  .q-text { font-size: 0.93rem; line-height: 1.7; margin-bottom: 8px; }
+
+  /* MCQ */
+  .mcq-opts { display: flex; flex-direction: column; gap: 5px; }
+  .mcq-opt {
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px 13px;
+    border: 1px solid var(--rule); border-radius: 5px;
+    background: var(--paper); cursor: pointer;
+    font-family: 'Libre Baskerville', serif; font-size: 0.87rem;
+    transition: all 0.15s; text-align: left; width: 100%; color: var(--ink);
+  }
+  .mcq-opt:hover:not(:disabled) { border-color: var(--ink); background: var(--bg); }
+  .mcq-opt.sel-ok { border-color: var(--green); background: var(--green-light); color: var(--green); font-weight: 700; }
+  .mcq-opt.sel-bad { border-color: var(--accent); background: var(--red-light); color: var(--accent); }
+  .mcq-opt.reveal-ok { border-color: var(--green); color: var(--green); background: var(--green-light); }
+  .mcq-opt:disabled { cursor: default; }
+  .opt-letter { font-family: 'DM Mono', monospace; font-size: 0.62rem; color: var(--muted); min-width: 14px; }
+
+  /* Fill */
+  .fill-blank {
+    border: none; border-bottom: 2px solid var(--ink);
+    background: transparent; font-family: 'Libre Baskerville', serif;
+    font-size: 0.93rem; color: var(--ink); outline: none;
+    padding: 1px 5px; min-width: 150px;
+    transition: border-color 0.2s; vertical-align: bottom;
+  }
+  .fill-blank:focus { border-color: var(--accent2); }
+  .fill-blank.ok { border-color: var(--green); color: var(--green); font-weight: 700; }
+  .fill-blank.bad { border-color: var(--accent); color: var(--accent); }
+  .fill-blank:disabled { opacity: 1; }
+
+  .q-feedback {
+    font-family: 'DM Mono', monospace; font-size: 0.7rem;
+    margin-top: 6px; display: none; line-height: 1.5;
+  }
+  .q-feedback.show { display: block; }
+  .q-feedback.ok-fb { color: var(--green); }
+  .q-feedback.bad-fb { color: var(--accent); }
+
+  /* ── SUBMIT ── */
+  .submit-row { margin-top: 52px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+  .submit-btn {
+    padding: 14px 44px; background: var(--ink); color: #fff; border: none;
+    font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; letter-spacing: 3px;
+    cursor: pointer; box-shadow: 4px 4px 0 var(--accent);
+    transition: transform 0.1s, box-shadow 0.1s;
+  }
+  .submit-btn:hover { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--accent); }
+
+  /* ── RESULTS ── */
+  #results-screen { display: none; max-width: 760px; margin: 0 auto; padding: 80px 24px; }
+  .results-stamp { font-family: 'Bebas Neue', sans-serif; font-size: clamp(5rem, 18vw, 11rem); line-height: 0.9; letter-spacing: -2px; margin-bottom: 8px; }
+  .results-pct { color: var(--accent); }
+  .results-grade { font-family: 'DM Mono', monospace; font-size: 0.72rem; letter-spacing: 4px; text-transform: uppercase; color: var(--muted); margin-bottom: 36px; }
+  .results-bar-wrap { background: var(--rule); height: 8px; border-radius: 4px; overflow: hidden; margin-bottom: 32px; max-width: 420px; }
+  .results-bar { height: 100%; border-radius: 4px; transition: width 1s cubic-bezier(0.22,1,0.36,1); width: 0%; }
+  .results-stats { display: flex; gap: 40px; margin-bottom: 44px; flex-wrap: wrap; }
+  .stat-num { font-family: 'Bebas Neue', sans-serif; font-size: 3rem; line-height: 1; }
+  .stat-label { font-family: 'DM Mono', monospace; font-size: 0.6rem; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); }
+
+  .topic-breakdown {
+    margin-bottom: 44px;
+  }
+  .breakdown-title {
+    font-family: 'DM Mono', monospace; font-size: 0.65rem; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--muted); margin-bottom: 16px;
+    padding-bottom: 8px; border-bottom: 1px solid var(--rule);
+  }
+  .topic-row {
+    display: grid; grid-template-columns: 200px 1fr 60px;
+    align-items: center; gap: 12px;
+    padding: 9px 0; border-bottom: 1px solid var(--rule);
+  }
+  .topic-name { font-size: 0.85rem; font-weight: 700; }
+  .topic-bar-wrap { background: var(--rule); height: 6px; border-radius: 3px; overflow: hidden; }
+  .topic-bar { height: 100%; border-radius: 3px; transition: width 0.8s cubic-bezier(0.22,1,0.36,1); width: 0%; }
+  .topic-pct { font-family: 'DM Mono', monospace; font-size: 0.72rem; text-align: right; }
+
+  .errors-title { font-family: 'DM Mono', monospace; font-size: 0.65rem; letter-spacing: 3px; text-transform: uppercase; color: var(--muted); margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid var(--rule); }
+  .error-item { padding: 11px 0; border-bottom: 1px solid var(--rule); display: grid; grid-template-columns: 28px 1fr; gap: 10px; font-size: 0.84rem; }
+  .err-num { font-family: 'DM Mono', monospace; font-size: 0.62rem; color: var(--muted); padding-top: 2px; }
+  .err-wrong { color: var(--accent); text-decoration: line-through; font-family: 'DM Mono', monospace; font-size: 0.8rem; }
+  .err-right { color: var(--green); font-family: 'DM Mono', monospace; font-size: 0.8rem; font-weight: 700; }
+  .err-note { font-style: italic; color: var(--muted); font-size: 0.76rem; margin-top: 2px; }
+
+  .retry-btn {
+    padding: 14px 40px; background: var(--accent); color: #fff; border: none;
+    font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; letter-spacing: 3px;
+    cursor: pointer; box-shadow: 4px 4px 0 var(--ink);
+    transition: transform 0.1s, box-shadow 0.1s; margin-top: 48px;
+  }
+  .retry-btn:hover { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--ink); }
+</style>
+</head>
+<body>
+
+<!-- ══ COVER ══ -->
+<div id="cover">
+  <div class="cover-eyebrow">Present Tenses · Complete Test</div>
+  <div class="cover-title">
+    PRESENT
+    <span class="line2">TENSES</span>
+  </div>
+  <div class="cover-sub">All 8 topics · 54 questions</div>
+
+  <div class="cover-topics">
+    <span class="topic-chip done">Present Simple</span>
+    <span class="topic-chip done">Present Continuous</span>
+    <span class="topic-chip done">Present Perfect</span>
+    <span class="topic-chip done">PS vs PC — Stative Verbs</span>
+    <span class="topic-chip done">PS vs PC — is/are being</span>
+    <span class="topic-chip done">PS vs PC — always -ing</span>
+    <span class="topic-chip done">Present Simple vs Continuous</span>
+    <span class="topic-chip done">Mixed Tenses — all four</span>
+  </div>
+
+  <div class="cover-meta">
+    <div class="cover-meta-item"><div class="cover-meta-label">Student</div><div class="cover-meta-val">Aleksei</div></div>
+    <div class="cover-meta-item"><div class="cover-meta-label">Questions</div><div class="cover-meta-val">54</div></div>
+    <div class="cover-meta-item"><div class="cover-meta-label">Sections</div><div class="cover-meta-val">8</div></div>
+    <div class="cover-meta-item"><div class="cover-meta-label">Pass mark</div><div class="cover-meta-val">70%</div></div>
+  </div>
+
+  <button class="start-btn" onclick="startTest()">BEGIN TEST</button>
+</div>
+
+<!-- ══ TEST ══ -->
+<div id="test-shell">
+  <div class="test-header">
+    <span class="test-header-title">PRESENT TENSES</span>
+    <div class="progress-track"><div class="progress-fill" id="prog-fill"></div></div>
+    <span class="progress-label" id="prog-label">0 / 42</span>
+  </div>
+  <div class="test-body" id="test-body"></div>
+</div>
+
+<!-- ══ RESULTS ══ -->
+<div id="results-screen"></div>
+
+<script>
+// ══════════════════════════════════════════════
+// TEST DATA — 6 questions per topic = 42 total
+// ══════════════════════════════════════════════
+const sections = [
+
+  // ── 1. PRESENT SIMPLE ──
+  {
+    topic: "Present Simple",
+    label: "Forms, habits, facts",
+    instr: "Choose the correct present simple form or fill in the verb in brackets.",
+    questions: [
+      { type:"mcq", q:"She _____ in St Petersburg.", opts:["live","lives","is living","are living"], ans:1, note:"he/she/it → add -s" },
+      { type:"mcq", q:"Water _____ at 100 degrees Celsius.", opts:["boil","is boiling","boils","are boiling"], ans:2, note:"scientific fact → present simple" },
+      { type:"mcq", q:"They _____ football every Saturday.", opts:["plays","playing","is playing","play"], ans:3, note:"they → no -s" },
+      { type:"fill", pre:"The train", post:"at 8:47. (leave)", ans:["leaves"], note:"schedule → present simple; it → -s" },
+      { type:"fill", pre:"My brother", post:"three languages fluently. (speak)", ans:["speaks"], note:"he → speaks" },
+      { type:"fill", pre:"", post:"she _____ the report every Monday? (finish)", ans:["does she finish"], note:"question → does + subject + infinitive" },
+    ]
+  },
+
+  // ── 2. PRESENT CONTINUOUS ──
+  {
+    topic: "Present Continuous",
+    label: "In progress, temporary, arrangements",
+    instr: "Choose the correct form or complete the sentence.",
+    questions: [
+      { type:"mcq", q:"Why _____ at me? Have I said something wrong?", opts:["do you look","you are looking","are you looking","you look"], ans:2, note:"action happening right now → continuous" },
+      { type:"mcq", q:"She _____ a new project this month — it's temporary.", opts:["works on","work on","is working on","has worked on"], ans:2, note:"temporary situation → continuous" },
+      { type:"mcq", q:"I _____ Tom for lunch on Friday — it's in the diary.", opts:["meet","am meeting","have met","met"], ans:1, note:"fixed future arrangement → present continuous" },
+      { type:"fill", pre:"Please be quiet!", post:"(I / try) to concentrate.", ans:["i'm trying","i am trying"], note:"action right now → continuous" },
+      { type:"fill", pre:"The climate", post:"faster than scientists predicted. (change)", ans:["is changing"], note:"ongoing trend → continuous" },
+      { type:"fill", pre:"Why", post:"so much lately? You seem stressed. (he / work)", ans:["is he working"], note:"temporary pattern → continuous" },
+    ]
+  },
+
+  // ── 3. PRESENT PERFECT ──
+  {
+    topic: "Present Perfect",
+    label: "Experience, result, unfinished time",
+    instr: "Choose the correct tense or put the verb in the correct form.",
+    questions: [
+      { type:"mcq", q:"I _____ this film. Let's watch something else.", opts:["already saw","have already seen","see already","already see"], ans:1, note:"result now — already → present perfect" },
+      { type:"mcq", q:"_____ you _____ to Paris? (ever / be)", opts:["Did you ever go","Have you ever been","Were you ever","Do you ever go"], ans:1, note:"life experience, no specific time → present perfect" },
+      { type:"mcq", q:"My English _____ a lot since I started lessons.", opts:["improved","was improving","improves","has improved"], ans:3, note:"since + change up to now → present perfect" },
+      { type:"fill", pre:"He", post:"three coffees this morning and it's only 9am. (have)", ans:["has had"], note:"unfinished period (this morning) → present perfect" },
+      { type:"fill", pre:"I", post:"him since we were at university. (know)", ans:["have known"], note:"since = from past to now → present perfect" },
+      { type:"fill", pre:"The company", post:"its profits by 30% so far this year. (increase)", ans:["has increased"], note:"so far this year = unfinished → present perfect" },
+    ]
+  },
+
+  // ── 4. STATIVE VERBS ──
+  {
+    topic: "PS vs PC — Stative Verbs",
+    label: "Verbs that never use -ing",
+    instr: "All these sentences use stative verbs. Choose the correct form — simple or continuous.",
+    questions: [
+      { type:"mcq", q:"Who _____ that bag? Nobody has claimed it.", opts:["is owning","does own","owns","is it belonging to"], ans:2, note:"own = stative → always present simple" },
+      { type:"mcq", q:"Can you hear those people? What _____ about?", opts:["are they talking","do they talk","did they talk","they are talking"], ans:0, note:"talk = action verb — action visible now → continuous" },
+      { type:"mcq", q:"These trousers _____ me perfectly.", opts:["are fitting","fit","is fitting","are fit"], ans:1, note:"fit = stative → present simple" },
+      { type:"fill", pre:"This soup", post:"amazing. What's in it? (smell)", ans:["smells"], note:"smell (sense) = stative → present simple" },
+      { type:"fill", pre:"I've never heard this word. How", post:"it? (you / pronounce)", ans:["do you pronounce"], note:"pronounce = action, habitual knowledge → simple" },
+      { type:"fill", pre:"She told me her address, but I", post:"it now. (not / remember)", ans:["don't remember","do not remember"], note:"remember = stative → simple" },
+    ]
+  },
+
+  // ── 5. IS/ARE BEING ──
+  {
+    topic: "PS vs PC — is/are being",
+    label: "Temporary behaviour vs permanent character",
+    instr: "Complete with is / are / is being / are being.",
+    questions: [
+      { type:"mcq", q:"I can't understand why he _____ so rude. He's normally very polite.", opts:["is","is being","are being","has been"], ans:1, note:"unusual temporary behaviour → is being" },
+      { type:"mcq", q:"You'll love him — he _____ a very kind person.", opts:["is being","are","is","has been"], ans:2, note:"permanent character → is" },
+      { type:"mcq", q:"They _____ very happy. They've just got engaged.", opts:["are being","have been","are","is"], ans:2, note:"genuine state, real feeling → are (not being)" },
+      { type:"fill", pre:"Why", post:"so difficult today? You're normally very easy to work with. (you / be)", ans:["are you being"], note:"contrast with normal → are you being" },
+      { type:"fill", pre:"Sarah", post:"very helpful lately. I wonder if she wants something. (be)", ans:["is being"], note:"unusual pattern → is being" },
+      { type:"fill", pre:"Don't worry — she", post:"a very reliable person. You can trust her. (be)", ans:["is"], note:"permanent trait → is" },
+    ]
+  },
+
+  // ── 6. ALWAYS -ING ──
+  {
+    topic: "PS vs PC — always -ing",
+    label: "Annoyed or neutral habit",
+    instr: "Choose between always + simple (neutral) and always + -ing (emotional/annoyed).",
+    questions: [
+      { type:"mcq", q:"He _____ on time. He's very reliable.", opts:["is always arriving","always arrives"], ans:1, note:"neutral positive habit → always + simple" },
+      { type:"mcq", q:"Not again! You _____ your keys.", opts:["always lose","are always losing"], ans:1, note:"frustration at repeated bad habit → always + -ing" },
+      { type:"mcq", q:"I _____ the same mistake in speaking. It's so annoying.", opts:["always make","am always making"], ans:1, note:"self-critical about repeated mistake → always + -ing" },
+      { type:"fill", pre:"My phone", post:"out of battery. I need a new one. (always / run)", ans:["is always running"], note:"annoying repeated problem → always + -ing" },
+      { type:"fill", pre:"She", post:"early — she's never been late once. (always / arrive)", ans:["always arrives"], note:"positive reliable habit → always + simple" },
+      { type:"fill", pre:"He", post:"people in meetings. It's so rude! (always / interrupt)", ans:["is always interrupting"], note:"annoying habit → always + -ing" },
+    ]
+  },
+
+  // ── 7. PS vs PC ──
+  {
+    topic: "Present Simple vs Present Continuous",
+    label: "Knowing when to use which",
+    instr: "The hardest section — choose or fill in the correct tense. Think about whether the verb describes a state/habit or an action in progress.",
+    questions: [
+      { type:"mcq", q:"A: 'We don't have any milk.' B: 'Really? I _____ some now.'", opts:["'m going to buy","'ll buy","buy","'m buying"], ans:1, note:"spontaneous decision right now → will ('ll)" },
+      { type:"mcq", q:"I _____ of selling my apartment. Would you be interested?", opts:["think","am thinking","have thought","was thinking"], ans:1, note:"think of = considering (active process) → continuous" },
+      { type:"mcq", q:"What _____ in your spare time? Do you have any hobbies?", opts:["are you doing","do you do","you do","are you do"], ans:1, note:"habitual question → present simple" },
+      { type:"fill", pre:"I usually", post:"to work, but this week I (cycle / take) the bus because my bike is broken.", ans:["cycle","am taking"], note:"habit → simple; temporary situation this week → continuous", double:true, pre2:"to work, but this week I", post2:"the bus because my bike is broken.", blank2:160 },
+      { type:"fill", pre:"She", post:"four languages and right now she (speak / help) a tourist in French. (speak / help)", ans:["speaks","is helping"], note:"fact → simple; action right now → continuous", double:true, pre2:"four languages and right now she", post2:"a tourist in French.", blank2:160 },
+      { type:"fill", pre:"I", post:"what you mean. Can you explain that again? (not / understand)", ans:["don't understand","do not understand"], note:"understand = stative → simple even though 'right now'" },
+    ]
+  },
+
+  // ── 8. MIXED TENSES ──
+  {
+    topic: "Mixed Tenses",
+    label: "Present Simple · Continuous · Perfect · Past Simple",
+    instr: "The final challenge — all four tenses mixed. Choose the correct form. Think carefully about the time signal and what the sentence means.",
+    questions: [
+      { type:"mcq", q:"I _____ him since we were at school. He hasn't changed at all.", opts:["know","knew","have known","am knowing"], ans:2, note:"since + connection to now → present perfect" },
+      { type:"mcq", q:"She _____ three coffees this morning — and it's only 9am.", opts:["drank","was drinking","drinks","has drunk"], ans:3, note:"this morning = unfinished period → present perfect" },
+      { type:"mcq", q:"Last year the company _____ its best results ever.", opts:["has achieved","achieves","achieved","is achieving"], ans:2, note:"last year = specific finished time → past simple" },
+      { type:"mcq", q:"A: 'You look tired.' B: 'I know. I _____ all day.'", opts:["work","worked","am working","have been working"], ans:3, note:"result visible now + duration → present perfect continuous" },
+      { type:"mcq", q:"She _____ for the bus when it started to rain.", opts:["waits","has waited","was waiting","waited"], ans:2, note:"in progress at past moment, then interrupted → past simple" },
+      { type:"mcq", q:"I _____ this book. You can borrow it if you want.", opts:["already read","have already read","was reading","already reads"], ans:1, note:"result now (you can borrow it) → present perfect" },
+      { type:"fill", pre:"How long", post:"English? You speak it very well. (you / learn)", ans:["have you been learning","have you learned","have you learnt"], note:"duration up to now → present perfect (continuous)" },
+      { type:"fill", pre:"When", post:"to Moscow? I didn't know you were there. (you / move)", ans:["did you move"], note:"when = specific past moment → past simple" },
+      { type:"fill", pre:"I can't come out tonight.", post:"on an important report. (I / work)", ans:["i'm working","i am working"], note:"happening right now, temporary → present continuous" },
+      { type:"fill", pre:"He", post:"three countries so far this year. (visit)", ans:["has visited"], note:"so far this year = unfinished → present perfect" },
+      { type:"fill", pre:"My English", post:"a lot since I started lessons — I can feel the difference. (improve)", ans:["has improved"], note:"since + result now → present perfect" },
+      { type:"fill", pre:"While I", post:"dinner last night, the power went out. (make)", ans:["was making"], note:"in progress when interrupted → past continuous" },
+    ]
+  },
+
+];
+
+// ══════════════════════════════════════════════
+// SCORE TRACKING
+// ══════════════════════════════════════════════
+const TOTAL = 54;
+let answered = 0;
+const userAnswers = {}; // qi → result
+
+function updateProgress() {
+  document.getElementById('prog-fill').style.width = (answered / TOTAL * 100) + '%';
+  document.getElementById('prog-label').textContent = answered + ' / 54';
+}
+
+function norm(s) {
+  return s.toLowerCase().trim().replace(/['']/g,"'").replace(/\s+/g,' ').replace(/[?.!]/g,'');
+}
+
+// ══════════════════════════════════════════════
+// BUILD TEST
+// ══════════════════════════════════════════════
+let globalQi = 0;
+const qiMeta = []; // {section, localI, type}
+
+function startTest() {
+  document.getElementById('cover').style.display = 'none';
+  document.getElementById('test-shell').style.display = 'block';
+  buildTest();
+  updateProgress();
+}
+
+function buildTest() {
+  const body = document.getElementById('test-body');
+
+  sections.forEach((sec, si) => {
+    const sh = document.createElement('div');
+    sh.innerHTML = `
+      <div class="section-header" ${si === 0 ? '' : ''}>
+        <span class="section-num">${si + 1}</span>
+        <div class="section-info">
+          <div class="section-title">Topic ${si + 1} of 7 · ${sec.label}</div>
+          <div class="section-topic">${sec.topic}</div>
+        </div>
+      </div>
+      <p class="section-instr">${sec.instr}</p>
+    `;
+    body.appendChild(sh);
+
+    sec.questions.forEach((q, li) => {
+      const qi = globalQi++;
+      qiMeta.push({ si, li, type: q.type });
+
+      const row = document.createElement('div');
+      row.className = 'q-row';
+      row.id = 'qr-' + qi;
+
+      if (q.type === 'mcq') {
+        const opts = q.opts.map((o, oi) =>
+          `<button class="mcq-opt" onclick="pickMCQ(${qi},${oi},this)"><span class="opt-letter">${String.fromCharCode(65+oi)}</span>${o}</button>`
+        ).join('');
+        row.innerHTML = `
+          <span class="q-n">${qi+1}</span>
+          <div class="q-content">
+            <div class="q-text">${q.q}</div>
+            <div class="mcq-opts">${opts}</div>
+            <div class="q-feedback" id="qf-${qi}"></div>
+          </div>`;
+      } else if (q.double) {
+        row.innerHTML = `
+          <span class="q-n">${qi+1}</span>
+          <div class="q-content">
+            <div class="q-text">
+              ${q.pre} <input class="fill-blank" id="fa-${qi}" style="min-width:150px" placeholder="..." autocomplete="off" />
+              ${q.pre2} <input class="fill-blank" id="fb-${qi}" style="min-width:${q.blank2}px" placeholder="..." autocomplete="off" />
+              ${q.post2}
+            </div>
+            <div class="q-feedback" id="qf-${qi}"></div>
+          </div>`;
+      } else {
+        row.innerHTML = `
+          <span class="q-n">${qi+1}</span>
+          <div class="q-content">
+            <div class="q-text">
+              ${q.pre} <input class="fill-blank" id="fa-${qi}" style="min-width:160px" placeholder="..." autocomplete="off" />
+              ${q.post}
+            </div>
+            <div class="q-feedback" id="qf-${qi}"></div>
+          </div>`;
+      }
+      body.appendChild(row);
+    });
+  });
+
+  // submit button
+  const sub = document.createElement('div');
+  sub.className = 'submit-row';
+  sub.innerHTML = `<button class="submit-btn" onclick="submitTest()">SUBMIT TEST</button><span id="unanswered-note" style="font-family:'DM Mono',monospace;font-size:0.68rem;color:var(--muted);"></span>`;
+  body.appendChild(sub);
+
+  // enter key handler
+  document.addEventListener('keydown', e => {
+    if (e.key !== 'Enter') return;
+    const id = document.activeElement?.id;
+    if (!id) return;
+    if (id.startsWith('fa-') || id.startsWith('fb-')) {
+      const qi = parseInt(id.split('-')[1]);
+      checkFill(qi);
+    }
+  });
+}
+
+function getQ(qi) {
+  const { si, li } = qiMeta[qi];
+  return sections[si].questions[li];
+}
+
+// ── MCQ answer ──
+function pickMCQ(qi, chosen, btn) {
+  if (userAnswers[qi] !== undefined) return;
+  const q = getQ(qi);
+  userAnswers[qi] = chosen === q.ans ? 'ok' : 'bad';
+  answered++; updateProgress();
+  const row = document.getElementById('qr-' + qi);
+  row.querySelectorAll('.mcq-opt').forEach(b => b.disabled = true);
+  const ok = chosen === q.ans;
+  btn.classList.add(ok ? 'sel-ok' : 'sel-bad');
+  if (!ok) row.querySelectorAll('.mcq-opt')[q.ans].classList.add('reveal-ok');
+  row.classList.add(ok ? 'answered-ok' : 'answered-bad');
+  const fb = document.getElementById('qf-' + qi);
+  fb.textContent = (ok ? '✓ ' : '✗  ' + q.opts[q.ans] + ' — ') + q.note;
+  fb.className = 'q-feedback show ' + (ok ? 'ok-fb' : 'bad-fb');
+}
+
+// ── Fill answer ──
+function checkFill(qi) {
+  if (userAnswers[qi] !== undefined) return;
+  const q = getQ(qi);
+  const inpA = document.getElementById('fa-' + qi);
+  if (!inpA || !inpA.value.trim()) return;
+
+  const valA = norm(inpA.value);
+  const okA = q.ans.map(a => norm(a)).includes(valA) || q.ans.map(a => norm(a)).some(a => valA === a);
+
+  let okB = true;
+  if (q.double) {
+    const inpB = document.getElementById('fb-' + qi);
+    if (inpB && inpB.value.trim()) {
+      const valB = norm(inpB.value);
+      okB = [norm(q.ans[1])].includes(valB);
+      inpB.disabled = true;
+      inpB.classList.add(okB ? 'ok' : 'bad');
+    }
+  }
+
+  const ok = okA && okB;
+  userAnswers[qi] = ok ? 'ok' : 'bad';
+  answered++; updateProgress();
+
+  inpA.disabled = true;
+  inpA.classList.add(okA ? 'ok' : 'bad');
+
+  const row = document.getElementById('qr-' + qi);
+  row.classList.add(ok ? 'answered-ok' : 'answered-bad');
+  const fb = document.getElementById('qf-' + qi);
+  fb.textContent = (ok ? '✓ ' : '✗  Correct: ' + q.ans.join(' / ') + ' — ') + q.note;
+  fb.className = 'q-feedback show ' + (ok ? 'ok-fb' : 'bad-fb');
+}
+
+// ── Submit ──
+function submitTest() {
+  // force-check any typed but unchecked fills
+  for (let qi = 0; qi < TOTAL; qi++) {
+    if (userAnswers[qi] !== undefined) continue;
+    const q = getQ(qi);
+    if (q.type !== 'mcq') {
+      const inp = document.getElementById('fa-' + qi);
+      if (inp && inp.value.trim()) { checkFill(qi); continue; }
+    }
+    userAnswers[qi] = 'bad'; // unanswered = wrong
+  }
+  showResults();
+}
+
+// ══════════════════════════════════════════════
+// RESULTS
+// ══════════════════════════════════════════════
+function showResults() {
+  document.getElementById('test-shell').style.display = 'none';
+  const rs = document.getElementById('results-screen');
+  rs.style.display = 'block';
+
+  let total_correct = 0;
+  const errors = [];
+  const topicScores = sections.map(() => ({ c: 0, t: 0 }));
+
+  let qi = 0;
+  sections.forEach((sec, si) => {
+    sec.questions.forEach((q, li) => {
+      const ok = userAnswers[qi] === 'ok';
+      topicScores[si].t++;
+      if (ok) { topicScores[si].c++; total_correct++; }
+      else errors.push({ qi, q, si });
+      qi++;
+    });
+  });
+
+  const pct = Math.round(total_correct / TOTAL * 100);
+  let grade, barColor;
+  if (pct >= 90) { grade = 'EXCELLENT'; barColor = '#1a6b3e'; }
+  else if (pct >= 70) { grade = 'GOOD — PASS'; barColor = '#1a4a8c'; }
+  else if (pct >= 50) { grade = 'NEEDS WORK'; barColor = '#c8a000'; }
+  else { grade = 'NOT READY YET'; barColor = '#c8391a'; }
+
+  let html = `
+    <div class="results-stamp"><span class="results-pct">${pct}%</span></div>
+    <div class="results-grade">${grade} · ${total_correct} / ${TOTAL} correct</div>
+    <div class="results-bar-wrap"><div class="results-bar" id="res-bar" style="background:${barColor}"></div></div>
+    <div class="results-stats">
+      <div class="stat-item"><div class="stat-num">${total_correct}</div><div class="stat-label">Correct</div></div>
+      <div class="stat-item"><div class="stat-num">${TOTAL - total_correct}</div><div class="stat-label">Wrong</div></div>
+      <div class="stat-item"><div class="stat-num">${TOTAL}</div><div class="stat-label">Total</div></div>
+    </div>
+    <div class="topic-breakdown">
+      <div class="breakdown-title">Score by topic</div>
+  `;
+
+  topicScores.forEach((ts, si) => {
+    const tpct = Math.round(ts.c / ts.t * 100);
+    const tcolor = tpct >= 80 ? '#1a6b3e' : tpct >= 60 ? '#1a4a8c' : '#c8391a';
+    html += `
+      <div class="topic-row">
+        <div class="topic-name">${sections[si].topic}</div>
+        <div class="topic-bar-wrap"><div class="topic-bar" data-w="${tpct}" style="background:${tcolor}"></div></div>
+        <div class="topic-pct" style="color:${tcolor}">${tpct}%</div>
+      </div>`;
+  });
+
+  html += `</div>`;
+
+  if (errors.length > 0) {
+    html += `<div class="errors-title">Questions to review (${errors.length})</div>`;
+    errors.forEach(({ qi, q, si }) => {
+      const correct = q.type === 'mcq' ? q.opts[q.ans] : q.ans.join(' / ');
+      const inp = document.getElementById('fa-' + qi);
+      const userVal = inp ? (inp.value || '(blank)') : '—';
+      html += `
+        <div class="error-item">
+          <span class="err-num">${qi+1}</span>
+          <div>
+            <div style="font-size:0.78rem;color:var(--muted);margin-bottom:3px;">${sections[si].topic}</div>
+            <span class="err-wrong">${userVal}</span>
+            <span style="margin:0 6px;color:var(--muted);">→</span>
+            <span class="err-right">${correct}</span>
+            <div class="err-note">${q.note}</div>
+          </div>
+        </div>`;
+    });
+  } else {
+    html += `<div style="font-family:'DM Mono',monospace;font-size:0.82rem;color:var(--green);">✓ No errors — perfect score!</div>`;
+  }
+
+  html += `<button class="retry-btn" onclick="location.reload()">TRY AGAIN</button>`;
+  rs.innerHTML = html;
+
+  setTimeout(() => {
+    document.getElementById('res-bar').style.width = pct + '%';
+    document.querySelectorAll('.topic-bar').forEach(b => {
+      b.style.width = b.getAttribute('data-w') + '%';
+    });
+  }, 100);
+}
+</script>
+</body>
+</html>
